@@ -8,6 +8,7 @@ class Questao(models.Model):
         (3, 'Difícil'),
     )
 
+
     OPCAO_CHOICES = (
         ('A', 'Opção A'),
         ('B', 'Opção B'),
@@ -32,8 +33,10 @@ class Questao(models.Model):
 
     
 class Prova(models.Model):
+    titulo = models.TextField(blank=True)
     curso = models.TextField()
     questoes = models.ManyToManyField(Questao)
+
     
     def __str__(self):
         return self.curso
