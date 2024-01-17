@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Questão</title>
+</head>
+<body>
+
+    <h2>Editar Questão</h2>
+
+    <form method="POST" action="{% url 'criar_questao' %}">
+        {% csrf_token %}
+        
+        <label for="id_materia">Matéria:</label>
+        <input type="text" id="id_materia" name="materia" value="{{ questao.materia }}" required>
+        <br>
+        
+        <label for="id_texto_questao">Texto da Questão:</label>
+        <textarea id="id_texto_questao" name="texto_questao" required>{{ questao.texto_questao }}</textarea>
+        <br>
+
+        <label for="id_opcao_a">Opção A:</label>
+        <input type="text" id="id_opcao_a" name="opcao_a" value="{{ questao.opcao_a }}" required>
+        <br>
+
+        <label for="id_opcao_b">Opção B:</label>
+        <input type="text" id="id_opcao_b" name="opcao_b" value="{{ questao.opcao_b }}" required>
+        <br>
+
+        <label for="id_opcao_c">Opção C:</label>
+        <input type="text" id="id_opcao_c" name="opcao_c" value="{{ questao.opcao_c }}" required>
+        <br>
+
+        <label for="id_opcao_d">Opção D:</label>
+        <input type="text" id="id_opcao_d" name="opcao_d" value="{{ questao.opcao_d }}" required>
+        <br>
+
+        <label for="id_opcao_e">Opção E:</label>
+        <input type="text" id="id_opcao_e" name="opcao_e" value="{{ questao.opcao_e }}" required>
+        <br>
+
+        <label for="id_correta">Opção Correta:</label>
+        <select id="id_correta" name="correta" required>
+            <option value="A" {% if questao.correta == 'A' %}selected{% endif %}>A</option>
+            <option value="B" {% if questao.correta == 'B' %}selected{% endif %}>B</option>
+            <option value="C" {% if questao.correta == 'C' %}selected{% endif %}>C</option>
+            <option value="D" {% if questao.correta == 'D' %}selected{% endif %}>D</option>
+            <option value="E" {% if questao.correta == 'E' %}selected{% endif %}>E</option>
+        </select>
+        <br>
+
+        <label for="id_dificuldade">Dificuldade:</label>
+        <select id="id_dificuldade" name="dificuldade" required>
+            <option value="1" {% if questao.dificuldade == 1 %}selected{% endif %}>Fácil</option>
+            <option value="2" {% if questao.dificuldade == 2 %}selected{% endif %}>Médio</option>
+            <option value="3" {% if questao.dificuldade == 3 %}selected{% endif %}>Difícil</option>
+        </select>
+        <br>
+
+        <input type="submit" value="Salvar Questão">
+    </form>
+
+</body>
+</html>

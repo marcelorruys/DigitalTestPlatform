@@ -1,0 +1,21 @@
+# Arquivos e diretórios específicos do Django
+__pycache__
+db.sqlite3
+*.pyc
+*.pyo
+*.pyd
+
+# Pasta virtual (venv)
+venv/
+
+# Arquivos de configuração
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+
+# Arquivos temporários
+*.swp
+*~

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Questão</title>
+</head>
+<body>
+
+    <h2>Cadastro de Questão</h2>
+
+    <form method="POST" action="{% url 'criar_questao' %}">
+        {% csrf_token %}
+        
+        <label for="id_materia">Matéria:</label>
+        <input type="text" id="id_materia" name="materia" required>
+        <br>
+        
+        <label for="id_texto_questao">Texto da Questão:</label>
+        <textarea id="id_texto_questao" name="texto_questao" required></textarea>
+        <br>
+
+        <label for="id_opcao_a">Opção A:</label>
+        <input type="text" id="id_opcao_a" name="opcao_a" required>
+        <br>
+
+        <label for="id_opcao_b">Opção B:</label>
+        <input type="text" id="id_opcao_b" name="opcao_b" required>
+        <br>
+
+        <label for="id_opcao_c">Opção C:</label>
+        <input type="text" id="id_opcao_c" name="opcao_c" required>
+        <br>
+
+        <label for="id_opcao_d">Opção D:</label>
+        <input type="text" id="id_opcao_d" name="opcao_d" required>
+        <br>
+
+        <label for="id_opcao_e">Opção E:</label>
+        <input type="text" id="id_opcao_e" name="opcao_e" required>
+        <br>
+
+        <label for="id_correta">Opção Correta:</label>
+        <select id="id_correta" name="correta" required>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
+        <br>
+
+        <label for="id_dificuldade">Dificuldade:</label>
+        <select id="id_dificuldade" name="dificuldade" required>
+            <option value="1">Fácil</option>
+            <option value="2">Médio</option>
+            <option value="3">Difícil</option>
+        </select>
+        <br>
+
+        <input type="submit" value="Salvar Questão">
+    </form>
+
+</body>
+</html>
