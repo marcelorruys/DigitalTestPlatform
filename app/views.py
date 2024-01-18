@@ -135,3 +135,8 @@ def deletar_prova(request, id):
     prova = Prova.objects.get(id=id)
     prova.delete()
     return redirect(index_prova)
+
+
+@login_required
+def index_dashboard(request):
+    return render(request, 'dashboard/index.html')

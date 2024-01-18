@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import index, index_questao, criar_questao, deletar_questao, index_prova, menu, editar_prova, add_questao, editar_questao_get, editar_questao_post, criar_prova, add_prova, deletar_prova
+from .views import index, index_questao, criar_questao, deletar_questao, index_prova, menu, editar_prova, add_questao, editar_questao_get, editar_questao_post, criar_prova, add_prova, deletar_prova, index_dashboard
 
 
 urlpatterns = [
@@ -21,8 +21,8 @@ urlpatterns = [
     path('prova/', index_prova, name='index_prova'),
     path('prova/criar', criar_prova, name='criar_prova'),
     path('prova/criar/add', add_prova, name='add_prova'),
-    path('prova/detalhes/<int:id>', editar_prova, name='editar_prova'),
+    path('prova/editar/<int:id>', editar_prova, name='editar_prova'),
     path('prova/deletar/<int:id>', deletar_prova, name='deletar_prova'),
     
-    path('dashboard/', index_questao, name='index_dashboard'),
+    path('dashboard/', index_dashboard, name='index_dashboard'),
 ]
