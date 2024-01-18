@@ -15,7 +15,6 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href={% static "css/style.css" %}>
   <title>Processo Seletivo</title>
-
 </head>
 
 <body>
@@ -30,34 +29,51 @@
           </a>
         </div>
 
-
         <div id="div-administrador">
-          <a href={% url "menu" %}>Administrador</a>
+          <a href={% url "index" %}>Área do Candidato</a>
           {% if request.user.is_authenticated %}
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <input type="submit" value="Logout">
-            </form>        
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+          </form>        
           {% endif %}
-            <h3>ETS</h3>
+          <h3>ETS</h3>
         </div>
       </div>
-
     </div>
   </header>
-  <section>
-    <form>
-      <div class="card-estilizado">
-        <h2 class="">Seja Bem Vindo a ETS!</h2>
-        <h3>Insira o Email utilizado durante o processo seletivo</h3>
-        <input type="text" name="text" id="nomeCompleto" placeholder="Digite seu nome completo" class="input-estilizado" style="width: 55%;" required>
-        <input type="email" name="email" id="emailCandidato" placeholder="Digite seu Email" class="input-estilizado" style="width: 55%;" required>
-        <input type="tel" name="tel" id="telefoneCandidato" placeholder="(xx) xxxxx - xxxx" class="input-estilizado" style="width: 55%;" required>
 
-        <button class="botao" type="submit"><a href="ProvaCandidato.html">Iniciar</a></button>
-      </div>
-    </form>
+  <section id="section-opcoes">
+      <h1 class="titleHome">Olá, Instrutor!</h1>
+      <div class="opcoesInstrutor">
 
+        <a href={% url "index_questao" %}>
+          <div class="card-opcoes" id="card-questoes">
+            <div class="texto-opcoes">
+              <h1>Questões</h1>
+              <h2>Modificar e Ajustar</h2>
+            </div>
+          </div>
+        </a>
+        
+        <a href={% url "index_prova" %}>
+          <div class="card-opcoes" id="card-provas">
+              <div class="texto-opcoes">
+                <h1>Provas</h1>
+                <h2>Geração e Histórico</h2>
+              </div>
+          </div>
+        </a>
+
+        <a href={% url "index_dashboard" %}>
+          <div class="card-opcoes" id="card-dashboard">
+            <div class="texto-opcoes">
+              <h1>Dashboard</h1>
+              <h2>Gerenciamento de Resultados</h2>
+            </div>
+          </div>
+        </a>
+      </div>  
   </section>
 </body>
 

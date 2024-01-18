@@ -15,7 +15,6 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href={% static "css/style.css" %}>
   <title>Processo Seletivo</title>
-
 </head>
 
 <body>
@@ -25,36 +24,32 @@
 
       <div class="subHeader">
         <div>
-          <a href={% url "index" %}>
+          <a href="{% url "index" %}">
             <img src={% static "img/Bosch_symbol_logo_black_red.svg" %} alt="">
           </a>
         </div>
 
 
         <div id="div-administrador">
-          <a href={% url "menu" %}>Administrador</a>
+          <a href={% url "index" %}>Área do Candidato</a>
           {% if request.user.is_authenticated %}
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <input type="submit" value="Logout">
-            </form>        
+            <a href={% url "logout" %}>Sair</a>
           {% endif %}
-            <h3>ETS</h3>
+          <h3>ETS</h3>
         </div>
       </div>
-
     </div>
   </header>
   <section>
-    <form>
+    <form method="post">
+      {% csrf_token %}
       <div class="card-estilizado">
-        <h2 class="">Seja Bem Vindo a ETS!</h2>
-        <h3>Insira o Email utilizado durante o processo seletivo</h3>
-        <input type="text" name="text" id="nomeCompleto" placeholder="Digite seu nome completo" class="input-estilizado" style="width: 55%;" required>
-        <input type="email" name="email" id="emailCandidato" placeholder="Digite seu Email" class="input-estilizado" style="width: 55%;" required>
-        <input type="tel" name="tel" id="telefoneCandidato" placeholder="(xx) xxxxx - xxxx" class="input-estilizado" style="width: 55%;" required>
+        <h2>Seja Bem Vindo Instrutor!</h2>
+        <h3>Preencha seu Login</h3>
 
-        <button class="botao" type="submit"><a href="ProvaCandidato.html">Iniciar</a></button>
+        <input type="text" name="username" id="edvInstrutores" placeholder="Digite seu EDV" style="width: 55%;" class="input-estilizado" required>
+        <input type="password" name="password" id="passwordInstrutores" placeholder="Digite sua Senha" style="width: 55%;" class="input-estilizado" required>
+        <button class="botao" type="submit"><a href={% url "menu" %}>Logar</a></button>
       </div>
     </form>
 

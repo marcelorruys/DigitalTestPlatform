@@ -16,9 +16,16 @@ class Questao(models.Model):
         ('D', 'Opção D'),
         ('E', 'Opção E'),
     )
-
     
+    PESO_CHOICES = (
+        ('1', 'Peso 1'),
+        ('2', 'Peso 2'),
+        ('3', 'Peso 3'),
+    )
+
+    titulo = models.TextField()
     dificuldade = models.IntegerField(choices=DIFICULDADE_CHOICES)
+    peso = models.IntegerField(choices=PESO_CHOICES)
     materia = models.TextField()
     texto_questao = models.TextField()
     opcao_a = models.TextField()
@@ -33,7 +40,7 @@ class Questao(models.Model):
 
     
 class Prova(models.Model):
-    titulo = models.TextField(blank=True)
+    titulo = models.TextField()
     curso = models.TextField()
     questoes = models.ManyToManyField(Questao)
 

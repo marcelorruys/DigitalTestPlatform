@@ -5,12 +5,12 @@
 
 @font-face {
   font-family: BoschSansCHS-Regular;
-  src: url('/fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Medium-v5_003.woff2') format('woff2');
+  src: url('../fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Regular-v5_003.woff2') format('woff2');
 }
 
 @font-face {
   font-family: BoschSansCHS-Light;
-  src: url('/fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Light-v5_003.woff2') format('woff2');
+  src: url('../fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Light-v5_003.woff2') format('woff2');
 }
 
 
@@ -75,7 +75,6 @@ header {
   font-size: 40px;
   font-style: normal;
   font-weight: 500;
-
 }
 
 .card-estilizado h3 {
@@ -85,16 +84,25 @@ header {
   font-size: 25px;
   font-style: normal;
   font-weight: 400;
-
 }
 
 #div-administrador {
   display: flex;
+  gap: 40px;
 }
+
+#div-administrador input {
+  border: none;
+  background-color: white;
+  font-family: BoschSansCHS-Regular;
+  font-size: 23px;
+  color: #4B8CEF;
+}
+
 
 #div-administrador h3 {
   font-weight: bold;
-  margin: auto 40px;
+  margin: auto 20px;
 }
 
 .input-estilizado {
@@ -160,15 +168,15 @@ header {
 }
 
 #card-questoes {
-  background-image: url("/img/Card_questoes.svg");
+  background-image: url("../img/Card_questoes.svg");
 }
 
 #card-provas {
-  background-image: url("/img/Card_provas.svg");
+  background-image: url("../img/Card_provas.svg");
 }
 
 #card-dashboard {
-  background-image: url("/img/Card_dashboard.svg");
+  background-image: url("../img/Card_dashboard.svg");
 }
 
 .card-opcoes{

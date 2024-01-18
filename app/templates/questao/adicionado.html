@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +29,6 @@
                 </div>
 
                 <div id="div-administrador">
-                    <a href={% url "menu" %}>Menu</a>
                     {% if request.user.is_authenticated %}
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -44,54 +42,12 @@
         </div>
     </header>
     <section class="container section-principal">
-
-        <div style="text-align: end;">
-            <button class="botao-adicionar">
-                <a href={% url "criar_questao" %} class="link-botao-adicionar">
-                    <h1>Adicionar</h1>
-                    <img src={% static "img/Add.png" %}>
-                </a>
-            </button>
-        </div>
-        
-        {% if questoes %}
-        <div id="div-questoes">
-        {% for questao in questoes %}
-            <div class="questao">
-                <div>
-                    <h1>
-                        Questão {{ forloop.counter }}
-                    </h1>
-                    <span>
-                        {{ questao.texto_questao|truncatechars:50|default:"..." }}
-                    </span>
-                </div>
-
-                <div id="opcoes-questao">
-                    <span>Dificuldade {{ questao.dificuldade }}</span>
-                    <a href={% url "editar_questao" questao.id %}>Detalhes</a>
-                </div>
-  
-            </div>
-        {% endfor %}
-        {% else %}
-          <div id="div-questoes">
-            <div class="questao">
-              <div>
-                  <h1>
-                      Nenhuma questão foi encontrada!
-                  </h1>
-                  <span>
-                      Tente criar uma nova questão!
-                  </span>
-
-              </div>
-            </div>
-        </div>
-        {% endif %}
-                                          
-        </div>
-    
+        <div class="card-estilizado">
+            <img src={% static "/img/Check.png" %} width="144px">
+            <h1 class="">A questão foi adicionada com sucesso!</h1>
+            <a href={% url "criar_questao" %} class="link-estilizado"><span style="color: black;">Clique aqui para</span> adicionar outra questão</a>
+            <button class="botao" type="submit" style="background: #008d13;"><a href={% url "index_questao" %}>Voltar</a></button>
+          </div>
     </section>
 </body>
 
