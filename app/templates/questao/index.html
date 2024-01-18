@@ -56,40 +56,39 @@
         
         {% if questoes %}
         <div id="div-questoes">
-        {% for questao in questoes %}
-            <div class="questao">
+            {% for questao in questoes %}
+                <div class="questao">
+                    <div>
+                        <h1>
+                            Questão {{ forloop.counter }}
+                        </h1>
+                        <span>
+                            {{ questao.texto_questao|truncatechars:50|default:"..." }}
+                        </span>
+                    </div>
+
+                    <div id="opcoes-questao">
+                        <span>Dificuldade {{ questao.dificuldade }}</span>
+                        <a href={% url "editar_questao" questao.id %}>Detalhes</a>
+                    </div>
+    
+                </div>
+            {% endfor %}
+        {% else %}
+            <div id="div-questoes">
+                <div class="questao">
                 <div>
                     <h1>
-                        Questão {{ forloop.counter }}
+                        Nenhuma questão foi encontrada!
                     </h1>
                     <span>
-                        {{ questao.texto_questao|truncatechars:50|default:"..." }}
+                        Tente criar uma nova questão!
                     </span>
-                </div>
 
-                <div id="opcoes-questao">
-                    <span>Dificuldade {{ questao.dificuldade }}</span>
-                    <a href={% url "editar_questao" questao.id %}>Detalhes</a>
                 </div>
-  
+                </div>
             </div>
-        {% endfor %}
-        {% else %}
-          <div id="div-questoes">
-            <div class="questao">
-              <div>
-                  <h1>
-                      Nenhuma questão foi encontrada!
-                  </h1>
-                  <span>
-                      Tente criar uma nova questão!
-                  </span>
-
-              </div>
-            </div>
-        </div>
-        {% endif %}
-                                          
+            {% endif %}                          
         </div>
     
     </section>

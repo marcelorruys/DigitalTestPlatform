@@ -92,23 +92,46 @@ def index_prova(request):
 
 
 @login_required
-def criar_prova(request, titulo, curso, qnt_questoes):
-    questoes_total = Questao.objects.all()
-    questoes_sorteadas = None
-    for i in range(qnt_questoes):
-        questoes_sorteadas.append(choice(questoes_total))
-    Prova.objects.create(titulo=titulo, curso=curso, questoes=questoes_sorteadas)
-    return redirect(index_prova)
+def criar_prova(request):
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        curso = request.POST.get('curso')
+        qnt_questoes = int(request.POST.get('quantidade'))
+
+        questoes_total = Questao.objects.all()
+        questoes_sorteadas = list()
+        for i in range(qnt_questoes):
+            questoes_sorteadas.append(choice(questoes_total))
+        prova = Prova.objects.create(titulo=titulo, curso=curso) # Adicionar Boolean Hidden
+        prova.questoes.set(questoes_sorteadas)
+        return redirect(index_prova) 
+    else:
+        return render(request, 'prova/criar.html')
 
 
 @login_required
-def detalhes_prova(request, id):
-    prova = Prova.objects.get(id=id)
-    if request.method == 'POST':
-        prova.delete()
-        return redirect(index_prova)
-    context = {
-        'prova' : prova
-    }
-    return render(request, 'prova/detalhes.html', context)
+def add_prova(request):
+    return render(request, 'prova/adicionado.html')
 
+
+@login_required
+def editar_prova(request, id):
+    if request.method == 'POST':
+        prova = Prova.objects.get(id=id)
+    else:
+        prova = Prova.objects.get(id=id)
+        if request.method == 'POST':
+            prova.delete()
+            return redirect(index_prova)
+        else:
+            context = {
+                'prova' : prova
+            }
+            return render(request, 'prova/editar.html', context)
+
+
+@login_required
+def deletar_prova(request, id):
+    prova = Prova.objects.get(id=id)
+    prova.delete()
+    return redirect(index_prova)

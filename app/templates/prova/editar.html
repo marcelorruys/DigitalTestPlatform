@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href={% static "css/style.css" %}>
+  <title>Processo Seletivo</title>
+</head>
+<body>
+  <header>
+    <img src={% static "img/Supergrafico.jpg" %} alt="Supergrafic" id="Supergrafic">
+    <div class="container-fluid">
+
+      <div class="subHeader">
+        <div>
+          <a href={% url "menu" %}>
+            <img src={% static "img/Bosch_symbol_logo_black_red.svg"%} alt="">
+          </a>
+        </div>
+
+
+        <div id="div-administrador">
+            {% if request.user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+                </form>        
+            {% endif %}
+          <h3>ETS</h3>
+        </div>
+
+    </div>
+
+    </div>
+  </header>
+
+  <section>
+    <div class="container" id="div-prova">
+      <div class="sub-header">
+        <div>
+          <h2>{{prova.titulo}}</h2> <!-- Adicionar Título -->
+          <h2>Curso: Desenvolvimento de Sistemas</h2>  
+        </div>
+
+        <form method='post' action={% url "editar_prova" prova.id%} > 
+            {% csrf_token %}
+            <div>
+                <label for="peso">Status da Prova</label><br>
+                <select class="input-estilizado" name="status" required>
+                    <option selected disabled>Selecione o status</option>
+                    <option value="True" {% if prova.status == "True" %}selected{% endif %}>Liberado</option>
+                    <option value="False" {% if prova.status == "False" %}selected{% endif %}>Não liberado</option>
+                </select>
+            </div>
+        </form>
+      </div>
+      <form method="post" action={% url "editar_prova" prova.id %}  id="form-prova">
+      {% for questao in prova.questoes.all %}
+
+        <h3>Questão {{ forloop.counter }}</h2>
+        <h3>{{ questao.texto_questao }}</h3>
+        <div class="div-respostas">
+
+          <div class="input-label">
+            <input type="radio" name="check" id="A" value="A" disabled>
+            <h2>A</h2>
+            <label for="A">{{ questao.opcao_a }}</label>
+          </div>
+
+          <div class="input-label">
+            <input type="radio" name="check" id="B" value="B" disabled>
+            <h2>B</h2>
+            <label for="B">{{ questao.opcao_b }}</label>
+          </div>
+
+          <div class="input-label">
+            <input type="radio" name="check" id="C" value="C" disabled>
+            <h2>C</h2>
+            <label for="C">{{ questao.opcao_c }}</label>
+          </div>
+
+          <div class="input-label">
+            <input type="radio" name="check" id="D" value="D" disabled>
+            <h2>D</h2>
+            <label for="D">{{ questao.opcao_d }}</label>
+          </div>
+
+          <div class="input-label">
+            <input type="radio" name="check" id="E" value="E" disabled>
+            <h2>E</h2>
+            <label for="E">{{ questao.opcao_e }}</label>
+          </div>
+          {% endfor %}
+          <div class="div-botoes-adicionar">
+            <div style="text-align: end;">
+                <a href={% url "deletar_prova" prova.id %}><input type="button" value="Deletar" class="botao-questao" id="botao-cancelar"></a>
+            </div>
+            <div style="text-align: end;">
+                <input type="submit" value="Salvar" class="botao-questao" id="botao-adicionar">
+            </div>
+        </div>
+
+        </div>
+        </form>
+        
+    </div>
+
+  </section>
+</body>
+</html>

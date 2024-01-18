@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +15,6 @@
     <link rel="stylesheet" href={% static "css/style.css" %}>
     <title>Processo Seletivo</title>
 </head>
-
 <body>
     <header>
         <img src={% static "img/Supergrafico.jpg" %} alt="Supergrafic" id="Supergrafic">
@@ -24,16 +22,20 @@
 
             <div class="subHeader">
                 <div>
-                    <a href="home.html">
+                    <a href={% url "menu" %}> 
                         <img src={% static "img/Bosch_symbol_logo_black_red.svg" %} alt="">
                     </a>
                 </div>
-
                 <div id="div-administrador">
+                    {% if request.user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Logout">
+                    </form>        
+                    {% endif %}
                     <h3>ETS</h3>
                 </div>
             </div>
-
         </div>
     </header>
     <section class="container section-principal">
@@ -45,54 +47,44 @@
 
         <div style="text-align: end;">
           <button class="botao-adicionar">
-              <a href="gerarprova.html" class="link-botao-adicionar">
+              <a href={% url "criar_prova" %} class="link-botao-adicionar"> 
                   <h1>Gerar Prova</h1>
-                  <img src="img/Add.png">
+                  <img src={% static "img/Add.png" %}>
               </a>
           </button>
       </div>
       </div>
+            {% if provas %}
+                <div id="div-questoes">
+            {% for prova in provas %}
+                <div class="questao">
+                    <div>
+                        <h1>
+                            {{ prova.titulo }}
+                        </h1>
+                    </div>
 
-       
-
-        <div id="div-questoes">
-            <div class="questao">
+                    <div id="opcoes-questao">
+                    <span>{{ prova.curso }}</span>
+                        <a href={% url "editar_prova" prova.id %}>Detalhes</a>
+                    </div>
+                </div>                        
+            {% endfor %}
+                </div>
+            {% else %}
+            <div id="div-questoes">
+                <div class="questao">
                 <div>
                     <h1>
-                        Titulo
+                        Nenhuma prova foi encontrada!
                     </h1>
                     <span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus..
+                        Tente criar uma nova prova!
                     </span>
                 </div>
-
-                <div id="opcoes-questao">
-                  <span>Digital Solutions</span>
-                    <a href="DetalhesProva.html">Detalhes</a>
                 </div>
-
             </div>
-
-            <div class="questao">
-                <div>
-                    <h1>
-                      Titulo
-                    </h1>
-                    <span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus..
-                    </span>
-                </div>
-
-                <div id="opcoes-questao">
-                  <span>Manufatura</span>
-                    <a href="DetalhesProva.html">Detalhes</a>
-                </div>
-
-            </div>
-                                          
-        </div>
-
+            {% endif %}
     </section>
 </body>
-
 </html>

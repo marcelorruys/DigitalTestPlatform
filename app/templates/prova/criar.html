@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href={% static "css/style.css" %}>
+    <title>Processo Seletivo</title>
+</head>
+
+<body>
+    <header>
+        <img src={% static  "img/Supergrafico.jpg" %} alt="Supergrafic" id="Supergrafic">
+        <div class="container-fluid">
+
+            <div class="subHeader">
+                <div>
+                    <a href={% url "menu" %}>
+                        <img src={% static "img/Bosch_symbol_logo_black_red.svg" %} alt="">
+                    </a>
+                </div>
+
+                <div id="div-administrador">
+                    <h3>ETS</h3>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <section class="container section-principal">
+
+        <div>
+            <h1 class="titulo-principal">Gere uma nova prova</h1>
+        </div>
+
+        <div class="card-estilizado" id="card-adicionar">
+            <div>
+                <form method="post" action={% url "criar_prova" %}>
+                    {% csrf_token %}
+                    <div id="div-adicionar-topo">
+                        <div>
+                            <label for="titulo">Título</label><br>
+                            <input type="text" name="titulo" placeholder="Insira o titulo" class="input-estilizado" required>
+                        </div>
+
+                        <div>
+                            <label for="quantidade">Qtd. de Questões</label><br>
+                            <input type="number" name="quantidade" placeholder="Ex: 5" class="input-estilizado" min="1" required>
+                        </div>
+                        
+                        <div >
+                            <label for="materia">Curso</label><br>
+                            <input type="text" name="curso" placeholder="Insira o Curso" class="input-estilizado" required>
+                        </div>
+                        
+
+                    </div>
+
+                        <div class="div-botoes-adicionar">
+                            <div style="text-align: end;">
+                                <a href={% url "index_prova" %}> 
+                                    <input type="button" value="Cancelar" class="botao-questao" id="botao-cancelar">
+                                </a>
+                            </div>
+    
+
+                            <div style="text-align: end;">
+                                <a href={% url "add_prova" %}> 
+                                    <input type="submit" value="Gerar Prova" class="botao-questao" id="botao-adicionar">
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+       
+
+    </section>
+</body>
+
+</html>
