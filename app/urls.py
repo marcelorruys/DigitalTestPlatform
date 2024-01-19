@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import index, index_questao, criar_questao, deletar_questao, index_prova, menu, editar_prova, add_questao, editar_questao_get, editar_questao_post, criar_prova, add_prova, deletar_prova, index_dashboard, capturar_informacoes
+from .views import index, index_questao, criar_questao, deletar_questao, index_prova, menu, editar_prova, add_questao, editar_questao_get, editar_questao_post, criar_prova, add_prova, deletar_prova, index_dashboard, capturar_informacoes, candidato_provas_index, candidato_prova 
 
 
 urlpatterns = [
@@ -30,4 +30,6 @@ urlpatterns = [
 
     path('', index, name='index'),
     path('candidato/criar', capturar_informacoes, name='capturar_informacoes'),
+    path('candidato/provas', candidato_provas_index, name='candidato_provas_index'),
+    path('candidato/prova/<int:id>', candidato_prova, name='candidato_prova'),
 ]

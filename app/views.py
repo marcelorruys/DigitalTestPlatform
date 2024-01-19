@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .models import Questao, Prova, Candidato, Resposta
@@ -139,30 +140,41 @@ def index_dashboard(request):
 
 
 def index(request):
-    print(request.session)
     return render(request, 'candidato/index.html')
 
 
 def capturar_informacoes(request):
-    if request.method=="POST":
-        request.session['nome'] = request.POST.get('nome')
-        request.session['email'] = request.POST.get('email')
-        request.session['telefone'] = request.POST.get('telefone')
-
+    if request.method == "POST":
+        response = HttpResponse()
+        response.set_cookie['nome', request.POST.get('nome')]
+        response.set_cookie['email', request.POST.get('email')]
+        response.set_cookie['telefone', request.POST.get('telefone')]
         return redirect(candidato_provas_index)
     else:
         return render(request, 'candidato/index.html')
     
 
 def candidato_provas_index(request):
-    if request.method == 'POST':
-        request.session['prova.id'] = request.POST.get('')
-    else:
-        provas_visiveis = Prova.objects.get(status=True)
-        context = {
-            'provas' : provas_visiveis
-        }
-        return render(request, 'candidato/provas.html', context)
+    provas = Prova.objects.get(status=True)
+    context = {
+        'provas' : provas
+    }
+    return render(request, 'candidato/provas.html', context)
     
-def candidato_prova(request):
-    return 
+
+def candidato_prova(request, id):
+    candidato_nome = request.COOKIES.get('nome')
+    candidato_email = request.COOKIES.get('email')
+    candidato_telefone = request.COOKIES.get('telefone')
+    if request.method == 'POST':
+        Candidato(nome=candidato_nome, email=candidato_email, telefone=candidato_telefone)    
+    else:
+        prova = Prova.objects.get(id=id)
+        context = {
+            'prova' : prova,
+            'candidato_nome' :candidato_nome, 
+            'candidato_email' : candidato_email,
+            'candidato_telefone' : candidato_telefone,
+        }
+        return render(request, 'prova.html', context)
+    

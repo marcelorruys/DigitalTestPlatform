@@ -18,10 +18,15 @@
   src: url('../fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Medium-v5_003.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: BoschSansCHS-Bold;
+  src: url('../fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Bold-v5_003.woff2') format('woff2');
+}
+
 
 body {
   height: 100%;
-  background-color: #E3E3E3;
+  background-color: #EFEFEF;
   font-family: BoschSansCHS-Regular;
   color: black;
   width: auto;
@@ -34,7 +39,7 @@ header {
 }
 
 #Supergrafic {
-  margin-top: -14px;
+  display: flex;
   height: 13.6px;
   width: 100%;
 }
@@ -79,7 +84,7 @@ header {
 
 .card-estilizado h2 {
   color: #972CEC;
-  font-family: BoschSansCHS-Medium;
+  font-family: BoschSansCHS-Bold;
   text-align: center;
   font-size: 40px;
   font-style: normal;
@@ -147,7 +152,7 @@ header {
 }
 
 .botao:hover {
-  background: #008d13;
+  background: #530e8b;
   transition: all 0.5s;
 }
 
@@ -177,15 +182,15 @@ header {
 }
 
 #card-questoes {
-  background-image: url("../img/Group\ 6.jpg 6.jpg");
+  background-image: url("../img/Questões-img.svg");
 }
 
 #card-provas {
-  background-image: url("../img/Card_provas.svg");
+  background-image: url("../img/Provas-img.svg");
 }
 
 #card-dashboard {
-  background-image: url("../img/Card_dashboard.svg");
+  background-image: url("../img/Dashboard-img.svg");
 }
 
 .card-opcoes{
