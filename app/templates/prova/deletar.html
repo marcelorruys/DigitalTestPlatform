@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,39 +18,37 @@
 
 <body>
   <header>
-    <img src={% static "img/Supergrafico_roxo.jpg" %} alt="Supergrafic" id="Supergrafic">
+    <img src={% static "img/Supergrafico.jpg" %} alt="Supergrafic" id="Supergrafic">
     <div class="container-fluid">
 
       <div class="subHeader">
         <div>
-          <a href="{% url "index" %}">
-            <img src={% static "img/Bosch_UVA.svg" %} alt="">
-          </a>
+            <img src={% static "img/Bosch_symbol_logo_black_red.svg" %} alt="">
         </div>
 
 
         <div id="div-administrador">
-          <a href={% url "index" %}>Área do Candidato</a>
-          {% if request.user.is_authenticated %}
-            <a href={% url "logout" %}>Sair</a>
-          {% endif %}
+          <a href={% url "menu"%}>Administrador</a>
+            {% if request.user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <input type="submit" value="Logout">
+            </form>        
+            {% endif %}
           <h3>ETS</h3>
         </div>
+
       </div>
+
     </div>
   </header>
   <section>
-    <form method="post">
-      {% csrf_token %}
-      <div class="card-estilizado">
-        <h2>Seja Bem Vindo Instrutor!</h2>
-        <h3>Preencha seu Login</h3>
+    <div class="card-estilizado">
+      <img src="/img/Cancelar.svg" width="144px">
+      <h1 class="">Desaja deletar a Prova?</h1>
 
-        <input type="text" name="username" id="edvInstrutores" placeholder="Digite seu EDV" style="width: 55%;" class="input-estilizado" required>
-        <input type="password" name="password" id="passwordInstrutores" placeholder="Digite sua Senha" style="width: 55%;" class="input-estilizado" required>
-        <button class="botao" type="submit"><a href={% url "menu" %}>Logar</a></button>
-      </div>
-    </form>
+      <button class="botao" type="submit" style="background: #9E2896;"><a href="prova.html">Deletar</a></button>
+    </div>
 
   </section>
 </body>

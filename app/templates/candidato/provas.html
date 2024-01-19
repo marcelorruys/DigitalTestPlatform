@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,13 +20,13 @@
 
 <body>
     <header>
-        <img src={% static "img/Supergrafico_roxo.jpg" %} alt="Supergrafic" id="Supergrafic">
+        <img src={% static "img/Supergrafico_Roxo.jpg" %} alt="Supergrafic" id="Supergrafic">
         <div class="container-fluid">
 
             <div class="subHeader">
                 <div>
-                    <a href={% url "index_questao" %}>
-                        <img src={% static "img/Bosch_UVA.svg" %} alt="">
+                    <a href={% url "menu" %}>
+                        <img src={% static "img/Bosch_symbol_logo_black_red.svg" %} alt="">
                     </a>
                 </div>
 
@@ -38,13 +39,43 @@
     </header>
     <section class="container section-principal">
 
-        <div class="card-estilizado">
-            <img src={% static "/img/Check.png" %} width="144px">
-            <h1 class="">A prova foi gerada com sucesso!</h1>
-            <a href={% url "criar_prova" %} class="link-estilizado"><span style="color: black;">Clique aqui para</span> gerar outra prova</a>
-            <button class="botao" type="submit" style="background: #008d13;"><a href={% url "index_questao" %}>Voltar</a></button>
-          </div>
+      <div class="div-gerar-prova">
+        <div>
+          <h1 class="titulo-principal">Lista de provas</h1>
+        </div>
+      </div>
 
+       
+        {% if provas %}
+        {% for prova in provas%}
+        <div id="div-questoes">
+            <div class="questao">
+                <div>
+                    <h1>
+                        {{ prova.titulo }}
+                    </h1>
+                    <span>
+                        {{ prova.curso }}
+                    </span>
+                </div>
+
+                <div id="opcoes-questao">
+                  <a href=""><button>Iniciar</button></a>
+                </div>
+            </div>                   
+        </div>
+        {% else %}
+        <div class="questao">
+            <div>
+                <h1>
+                    Nenhuma prova foi encontrada!
+                </h1>
+                <span>
+                    Aguarde a prova ser liberada!
+                </span>
+            </div>
+        </div>                   
+        {% endif %}
     </section>
 </body>
 

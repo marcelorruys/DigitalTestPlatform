@@ -43,6 +43,7 @@ class Prova(models.Model):
     titulo = models.TextField()
     curso = models.TextField()
     questoes = models.ManyToManyField(Questao)
+    status = models.BooleanField(default=False)
 
     
     def __str__(self):
@@ -53,6 +54,7 @@ class Candidato(models.Model):
     nome = models.TextField()
     email = models.EmailField(max_length=254)
     telefone = models.TextField()
+    prova = models.ForeignKey(Prova, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.nome

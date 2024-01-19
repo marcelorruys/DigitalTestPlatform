@@ -6,10 +6,6 @@ from .models import Questao, Prova, Candidato, Resposta
 from random import choice
 
 
-def index(request):
-    return render(request, 'index.html')
-
-
 @login_required
 def menu(request):
     return render(request, 'menu/index.html')
@@ -102,7 +98,7 @@ def criar_prova(request):
         questoes_sorteadas = list()
         for i in range(qnt_questoes):
             questoes_sorteadas.append(choice(questoes_total))
-        prova = Prova.objects.create(titulo=titulo, curso=curso) # Adicionar Boolean Hidden
+        prova = Prova.objects.create(titulo=titulo, curso=curso) 
         prova.questoes.set(questoes_sorteadas)
         return redirect(index_prova) 
     else:
@@ -140,3 +136,33 @@ def deletar_prova(request, id):
 @login_required
 def index_dashboard(request):
     return render(request, 'dashboard/index.html')
+
+
+def index(request):
+    print(request.session)
+    return render(request, 'candidato/index.html')
+
+
+def capturar_informacoes(request):
+    if request.method=="POST":
+        request.session['nome'] = request.POST.get('nome')
+        request.session['email'] = request.POST.get('email')
+        request.session['telefone'] = request.POST.get('telefone')
+
+        return redirect(candidato_provas_index)
+    else:
+        return render(request, 'candidato/index.html')
+    
+
+def candidato_provas_index(request):
+    if request.method == 'POST':
+        request.session['prova.id'] = request.POST.get('')
+    else:
+        provas_visiveis = Prova.objects.get(status=True)
+        context = {
+            'provas' : provas_visiveis
+        }
+        return render(request, 'candidato/provas.html', context)
+    
+def candidato_prova(request):
+    return 

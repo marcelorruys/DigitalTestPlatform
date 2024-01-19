@@ -13,10 +13,15 @@
   src: url('../fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Light-v5_003.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: BoschSansCHS-Medium;
+  src: url('../fontes/BoschSans-Complete/boschsans-v5_003/fonts-woff2/BoschSans-Medium-v5_003.woff2') format('woff2');
+}
+
 
 body {
   height: 100%;
-  background-color: #ffffff;
+  background-color: #E3E3E3;
   font-family: BoschSansCHS-Regular;
   color: black;
   width: auto;
@@ -25,6 +30,7 @@ body {
 
 header {
   box-shadow: 0px 4px 29px 0px rgba(0, 0, 0, 0.23);
+  background-color: white;
 }
 
 #Supergrafic {
@@ -40,13 +46,15 @@ header {
 .subHeader a {
   font-size: 23px;
   text-decoration: none;
-  color: #4B8CEF;
+  color: #972CEC;
 }
 
 .subHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 80px;
+  padding-bottom: 10px;
 }
 
 .card-estilizado {
@@ -70,7 +78,8 @@ header {
 }
 
 .card-estilizado h2 {
-  color: #007BC0;
+  color: #972CEC;
+  font-family: BoschSansCHS-Medium;
   text-align: center;
   font-size: 40px;
   font-style: normal;
@@ -96,7 +105,7 @@ header {
   background-color: white;
   font-family: BoschSansCHS-Regular;
   font-size: 23px;
-  color: #4B8CEF;
+  color: #972CEC;
 }
 
 
@@ -124,7 +133,7 @@ header {
 }
 
 .botao {
-  background: #007BC0;
+  background: #972CEC;
   padding: 15px 50px;
   border: none;
   border-radius: 15px;
@@ -168,7 +177,7 @@ header {
 }
 
 #card-questoes {
-  background-image: url("../img/Card_questoes.svg");
+  background-image: url("../img/Group\ 6.jpg 6.jpg");
 }
 
 #card-provas {
@@ -210,7 +219,7 @@ header {
 
 .link-botao-adicionar {
   display: flex;
-  background: #007BC0;
+  background: #972CEC;
   border-radius: 14px;
   width: 260px;
   padding: 5px 25px;
@@ -219,7 +228,7 @@ header {
 }
 
 .link-botao-adicionar:hover {
-  background: #00649f;
+  background: #6710ad;
   transition: all 0.5s;
 }
 
@@ -237,6 +246,10 @@ header {
   padding-top: 70px;
 }
 
+#div-container-questoes{
+  background-color: white;
+}
+
 .questao {
   display: flex;
   box-shadow: 0px 2px 8.6px 0px rgba(0, 0, 0, 0.25);
@@ -244,6 +257,7 @@ header {
   padding: 30px 80px;
   margin-bottom: 40px;
   justify-content: space-between;
+  background-color: white;
 }
 
 .questao h1{
@@ -337,7 +351,7 @@ header {
 }
 
 #botao-adicionar:hover {
-  background: #00700f;
+  background: rgb(0, 95, 13);
   transition: all 0.5s;
 }
 
@@ -362,7 +376,7 @@ header {
 .link-estilizado {
   font-size: 23px;
   text-decoration: none;
-  color: #4B8CEF;
+  color: #972CEC;
 }
 
 .div-botoes-adicionar{
@@ -375,6 +389,7 @@ header {
 #div-prova{
   padding: 80px;
   margin-bottom: 50px;
+  word-wrap: break-word;
 }
 
 #div-prova h2{
@@ -386,31 +401,48 @@ line-height: normal;
 }
 
 #form-prova{
+  display: flex;
+  flex-direction: column;
   margin-top: 80px;
+  overflow-wrap: break-word;
+  text-align: left;
 }
+
+#form-prova label{
+  max-width: 1080px;
+  overflow-wrap: break-word;
+}
+
 
 #form-prova h2{
   font-size: 24px;
   font-weight: 400;
+}
 
+#form-prova label{
+  display: flex;
 }
 
 .div-respostas{
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  float: left;
+  gap: 80px;
   margin: 80px 40px;
+  overflow-wrap: break-word;
 }
 
 .input-label{
   display: flex;
-  justify-content: center;
   gap: 22px;
 }
 
 .input-label input{
     height: 35px;
+}
+
+.input-label label{
+  height: 35px;
+  overflow-wrap: break-word;
 }
 
 .sub-header{
