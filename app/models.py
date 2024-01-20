@@ -62,7 +62,7 @@ class Candidato(models.Model):
 class Resposta(models.Model):
     candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     prova = models.ForeignKey(Prova, on_delete=models.CASCADE)
-    respostas = models.CharField(max_length=1)
+    respostas = models.TextField(null=True)
     
     def __str__(self):
         return self.candidato.nome

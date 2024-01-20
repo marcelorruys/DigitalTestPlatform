@@ -25,9 +25,7 @@
 
             <div class="subHeader">
                 <div>
-                    <a href={% url "menu" %}>
-                        <img src={% static "img/Bosch_symbol_logo_black_red.svg" %} alt="">
-                    </a>
+                    <img src={% static "img/Bosch_UVA.svg" %} alt="">
                 </div>
 
                 <div id="div-administrador">
@@ -44,10 +42,8 @@
           <h1 class="titulo-principal">Lista de provas</h1>
         </div>
       </div>
-
-       
-        {% if provas %}
-        {% for prova in provas%}
+        {% for prova in provas %}
+        {% if prova.status %}
         <div id="div-questoes">
             <div class="questao">
                 <div>
@@ -74,8 +70,9 @@
                     Aguarde a prova ser liberada!
                 </span>
             </div>
-        </div>                   
+        </div>         
         {% endif %}
+        {% endfor %}
     </section>
 </body>
 

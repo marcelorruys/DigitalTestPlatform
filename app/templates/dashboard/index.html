@@ -25,12 +25,13 @@
       <div class="subHeader">
         <div>
           <a href={% url "menu" %}>
-            <img src={% static "Bosch_UVA.svg" %} alt="">
+            <img src={% static "img/Bosch_UVA.svg" %} alt="">
           </a>
         </div>
 
 
         <div id="div-administrador">
+          <a href={% url "menu" %}>Menu</a>
           {% if request.user.is_authenticated %}
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}

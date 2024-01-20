@@ -113,24 +113,25 @@ def add_prova(request):
 
 @login_required
 def editar_prova(request, id):
+    prova = Prova.objects.get(id=id)
     if request.method == 'POST':
-        prova = Prova.objects.get(id=id)
+        status = request.POST.get('status')
+        prova.status = status
+        prova.save()
+        return redirect(index_prova)
     else:
-        prova = Prova.objects.get(id=id)
-        if request.method == 'POST':
-            prova.delete()
-            return redirect(index_prova)
-        else:
-            context = {
-                'prova' : prova
-            }
-            return render(request, 'prova/editar.html', context)
+        context = {
+            'prova' : prova
+        }
+        return render(request, 'prova/editar.html', context)
 
 
 @login_required
 def deletar_prova(request, id):
     prova = Prova.objects.get(id=id)
-    prova.delete()
+    if request.method == 'POST':
+    
+        prova.delete()
     return redirect(index_prova)
 
 
@@ -144,37 +145,40 @@ def index(request):
 
 
 def capturar_informacoes(request):
-    if request.method == "POST":
-        response = HttpResponse()
-        response.set_cookie['nome', request.POST.get('nome')]
-        response.set_cookie['email', request.POST.get('email')]
-        response.set_cookie['telefone', request.POST.get('telefone')]
-        return redirect(candidato_provas_index)
-    else:
-        return render(request, 'candidato/index.html')
+        nome = request.POST.get('nome')
+        email = request.POST.get('email')
+        telefone = request.POST.get('telefone')
+        if not Candidato.objects.filter(email=email).exists(): 
+            Candidato.objects.create(nome=nome, email=email, telefone=telefone) 
     
-
-def candidato_provas_index(request):
-    provas = Prova.objects.get(status=True)
-    context = {
-        'provas' : provas
-    }
-    return render(request, 'candidato/provas.html', context)
+        provas = Prova.objects.all()
+        context = {
+            'provas' : provas
+        }
+        response = render(request, 'candidato/provas.html', context)
+        response.set_cookie('email', email)
+        return response
     
 
 def candidato_prova(request, id):
-    candidato_nome = request.COOKIES.get('nome')
     candidato_email = request.COOKIES.get('email')
-    candidato_telefone = request.COOKIES.get('telefone')
+    candidato = Candidato.objects.get(email=candidato_email)
+    prova = Prova.objects.get(id=id) 
     if request.method == 'POST':
-        Candidato(nome=candidato_nome, email=candidato_email, telefone=candidato_telefone)    
+        respostas = []
+        for questao in prova.questoes.all():
+            nome_resposta = f'resposta_{questao.id}'
+            resposta_candidato = request.POST.get(nome_resposta)
+            respostas.append(Resposta(candidato=candidato, prova=prova, respostas=resposta_candidato))
+        Resposta.objects.bulk_create(respostas)
+        return render(request, 'candidato/enviado.html', {'candidato': candidato, 'prova': prova, 'respostas': respostas})
     else:
-        prova = Prova.objects.get(id=id)
         context = {
             'prova' : prova,
-            'candidato_nome' :candidato_nome, 
-            'candidato_email' : candidato_email,
-            'candidato_telefone' : candidato_telefone,
+            'candidato' : candidato
         }
-        return render(request, 'prova.html', context)
+        return render(request, 'candidato/prova.html', context)
+    
+def candidato_finalizada(request):
+    return render(request, 'candidato/enviado.html')
     

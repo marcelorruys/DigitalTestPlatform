@@ -31,6 +31,7 @@
 
 
         <div id="div-administrador">
+          <a href={% url "menu" %}>Menu</a>
           {% if request.user.is_authenticated %}
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
@@ -47,77 +48,71 @@
 
   <section>
     <div class="container" id="div-prova">
-      <div class="sub-header">
-        <div>
-          <h2>{{prova.titulo}}</h2> 
-          <h2>Curso: Desenvolvimento de Sistemas</h2>
-        </div>
-
         <form method='post' action={% url "editar_prova" prova.id%}>
           {% csrf_token %}
-          <div>
-            <label for="peso">Status da Prova</label><br>
-            <select class="input-estilizado" name="status" required>
-              <option selected disabled>Selecione o status</option>
-              <option value="True" {% if prova.status == "True" %}selected{% endif %}>Liberado</option>
-              <option value="False" {% if prova.status == "False" %}selected{% endif %}>Não liberado</option>
-            </select>
+          <div class="sub-header">
+            <div>
+              <h2>{{prova.titulo}}</h2> 
+              <h2>Curso: Desenvolvimento de Sistemas</h2>
+            </div>
+            <div>
+              <label for="peso">Status da Prova</label><br>
+              <select class="input-estilizado" name="status" required>
+                <option selected disabled>Selecione o status</option>
+                <option value="True" {% if prova.status == "1" %}selected{% endif %}>Liberado</option>
+                <option value="False" {% if prova.status == "0" %}selected{% endif %}>Não liberado</option>
+              </select>
+            </div>
           </div>
-        </form>
-      </div>
-      <form method="post" action={% url "editar_prova" prova.id %} id="form-prova">
-        {% for questao in prova.questoes.all %}
-
-        <h3>Questão {{ forloop.counter }}</h2>
-          <div>
-            <h3>{{ questao.texto_questao }}</h3>
-          </div>
-          <div class="div-respostas">
-            <div class="input-label">
-              <input type="radio" name="check" id="A" value="A" disabled>
-              <h2>A</h2>
-              <label for="A">{{ questao.opcao_a }}</label>
+          {% for questao in prova.questoes.all %}
+          <h3>Questão {{ forloop.counter }}</h2>
+            <div>
+              <h3>{{ questao.texto_questao }}</h3>
             </div>
-
-            <div class="input-label">
-              <input type="radio" name="check" id="B" value="B" disabled>
-              <h2>B</h2>
-              <label for="B">{{ questao.opcao_b }}</label>
-            </div>
-
-            <div class="input-label">
-              <input type="radio" name="check" id="C" value="C" disabled>
-              <h2>C</h2>
-              <label for="C">{{ questao.opcao_c }}</label>
-            </div>
-
-            <div class="input-label">
-              <input type="radio" name="check" id="D" value="D" disabled>
-              <h2>D</h2>
-              <label for="D">{{ questao.opcao_d }}</label>
-            </div>
-
-            <div class="input-label">
-              <input type="radio" name="check" id="E" value="E" disabled>
-              <h2>E</h2>
-              <label for="E">{{ questao.opcao_e }}</label>
-            </div>
-            {% endfor %}
-            <div class="div-botoes-adicionar">
-              <div style="text-align: end;">
-                <a href={% url "deletar_prova" prova.id %}><input type="button" value="Deletar" class="botao-questao"
-                    id="botao-cancelar"></a>
+            <div class="div-respostas">
+              <div class="input-label">
+                <input type="radio" name="check" id="A" value="A" disabled>
+                <h2>A</h2>
+                <label for="A">{{ questao.opcao_a }}</label>
               </div>
-              <div style="text-align: end;">
-                <input type="submit" value="Salvar" class="botao-questao" id="botao-adicionar">
-              </div>
-            </div>
 
-          </div>
+              <div class="input-label">
+                <input type="radio" name="check" id="B" value="B" disabled>
+                <h2>B</h2>
+                <label for="B">{{ questao.opcao_b }}</label>
+              </div>
+
+              <div class="input-label">
+                <input type="radio" name="check" id="C" value="C" disabled>
+                <h2>C</h2>
+                <label for="C">{{ questao.opcao_c }}</label>
+              </div>
+
+              <div class="input-label">
+                <input type="radio" name="check" id="D" value="D" disabled>
+                <h2>D</h2>
+                <label for="D">{{ questao.opcao_d }}</label>
+              </div>
+
+              <div class="input-label">
+                <input type="radio" name="check" id="E" value="E" disabled>
+                <h2>E</h2>
+                <label for="E">{{ questao.opcao_e }}</label>
+              </div>
+              {% endfor %}
+              <div class="div-botoes-adicionar">
+                <div style="text-align: end;">
+                  <a href={% url "deletar_prova" prova.id %}><input type="button" value="Deletar" class="botao-questao"
+                      id="botao-cancelar"></a>
+                </div>
+                <div style="text-align: end;">
+                  <input type="submit" value="Salvar" class="botao-questao botao" id="botao-adicionar">
+                </div>
+              </div>
+
+            </div>
       </form>
-
     </div>
-
   </section>
 </body>
 

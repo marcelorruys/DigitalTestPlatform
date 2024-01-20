@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,22 +14,15 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href={% static "css/style.css" %}>
   <title>Processo Seletivo</title>
-
 </head>
-
 <body>
   <header>
     <img src={% static "img/Supergrafico_Roxo.jpg" %} alt="Supergrafic" id="Supergrafic">
     <div class="container-fluid">
-
       <div class="subHeader">
         <div>
-          <a href={% url "index" %}>
             <img src={% static "img/Bosch_UVA.svg" %} alt="">
-          </a>
         </div>
-
-
         <div id="div-administrador">
           <a href={% url "menu" %}>Administrador</a>
           {% if request.user.is_authenticated %}
@@ -42,24 +34,20 @@
             <h3>ETS</h3>
         </div>
       </div>
-
     </div>
   </header>
   <section>
-    <form method='post'>
+    <form method='post' action={% url "capturar_informacoes" %}>
       {% csrf_token %}
       <div class="card-estilizado">
         <h2 class="">Seja Bem Vindo a ETS!</h2>
         <h3>Insira o Email utilizado durante o processo seletivo</h3>
-        <input type="text" name="text" id="nomeCompleto" placeholder="Digite seu nome completo" class="input-estilizado" style="width: 55%;" required>
+        <input type="text" name="nome" id="nomeCompleto" placeholder="Digite seu nome completo" class="input-estilizado" style="width: 55%;" required>
         <input type="email" name="email" id="emailCandidato" placeholder="Digite seu Email" class="input-estilizado" style="width: 55%;" required>
-        <input type="tel" name="tel" id="telefoneCandidato" placeholder="(xx) xxxxx - xxxx" class="input-estilizado" style="width: 55%;" required>
-
-        <a href={% url "capturar_informacoes" %}><button class="botao" type="submit">Iniciar</button></a>
+        <input type="tel" name="telefone" id="telefoneCandidato" placeholder="(xx) xxxxx - xxxx" class="input-estilizado" style="width: 55%;" required>
+        <button class="botao" type="submit">Iniciar</button>
       </div>
     </form>
-
   </section>
 </body>
-
 </html>
