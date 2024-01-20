@@ -51,7 +51,7 @@ header {
 .subHeader a {
   font-size: 23px;
   text-decoration: none;
-  color: #972CEC;
+  color: #3672CB;
 }
 
 .subHeader {
@@ -59,7 +59,7 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  padding-bottom: 10px;
+  padding: 0px 100px;
 }
 
 .card-estilizado {
@@ -110,7 +110,7 @@ header {
   background-color: white;
   font-family: BoschSansCHS-Regular;
   font-size: 23px;
-  color: #972CEC;
+  color: #585858;
 }
 
 
@@ -368,10 +368,9 @@ header {
 }
 
 #botao-cancelar:hover {
-  transition: all 1s;
-  border: none;
-  color: white;
-  background: #ED0007;
+  transition: all 0.5s;
+  border: 1px solid #ED0007;
+  color: #ED0007;
 }
 
 .div-gerar-prova{
