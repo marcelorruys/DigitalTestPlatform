@@ -9,6 +9,7 @@ from random import shuffle
 # Pegando GSPREAD CLIENTE pelo arquivo Settings
 from sistema import settings
 import gspread
+import pandas as pd
 
 
 @login_required
@@ -101,7 +102,7 @@ def criar_prova(request):
         questoes_total = list(Questao.objects.all())
         shuffle(questoes_total)
         questoes_sorteadas = questoes_total[:qnt_questoes]
-        prova = Prova.objects.create(titulo=titulo, curso=curso) 
+        prova = Prova.objects.create(titulo=titulo, curso=curso, quantidade_questoes=qnt_questoes) 
         prova.questoes.set(questoes_sorteadas)
         return redirect(index_prova)
     else:
@@ -169,33 +170,50 @@ def candidato_prova(request, id):
         for questao in prova.questoes.all():
             nome_resposta = f'resposta_{questao.id}'
             nome_questao = f'questao_{questao.id}'
-            peso_questao = f'peso={questao.peso}'
-            correta_questao = f'correta={questao.correta}'
+            peso_questao = f'{questao.peso}'
+            correta_questao = f'{questao.correta}'
             resposta_candidato = request.POST.get(nome_resposta)            
             respostas_lista.append(nome_questao+ ',' + peso_questao + ',' + resposta_candidato + ',' + correta_questao)
-        respostas = ','.join(respostas_lista)    
+        respostas = ','.join(respostas_lista)
+        respostas = respostas.split(",")
         Resposta.objects.create(candidato=candidato, prova=prova, respostas=respostas)
 
 
         nome_planilha = "Avaliações BOSCH UVA"
-        possivel_nome_folha = prova.titulo +"-"+ prova.id
+        possivel_nome_folha = str(prova.titulo) + "-" + str(prova.id)
 
         # Abra a planilha pelo nome
         planilha = settings.GSPREAD_CLIENT.open(nome_planilha)
 
         # Verifique se a folha já existe
-        try:
-            folha = planilha.worksheet(possivel_nome_folha)
+        while True:
+            try:
+                folha = planilha.worksheet(possivel_nome_folha)
+                info_candidato = [candidato.nome, candidato.email, candidato.telefone, prova.titulo, prova.curso]
+                for questao in range(prova.quantidade_questoes*4):
+                    info_candidato.append(respostas[questao])
 
-        except gspread.exceptions.WorksheetNotFound:
-            folha = planilha.add_worksheet(title=prova.titulo +"-"+ prova.id)
+                folha.insert_row(info_candidato)
 
+                break
+            except:
+                folha = planilha.add_worksheet(title=possivel_nome_folha, rows=100, cols=100)
 
+                cabecalho = ["Nome", "Email", "Telefone", "Título da Pova", "Curso"]
+                for id in prova.quantidade_questoes:
+                    cabecalho.append("Questão " + str(id+1))
+                    cabecalho.append("Peso")
+                    cabecalho.append("Resposta do Candidato")
+                    cabecalho.append("Resposta Correta")
 
+                folha.insert_row(cabecalho, index = 1)
+                
         return render(request, 'candidato/enviado.html')
     else:
+        questoes = prova.questoes.all()
         context = {
             'prova': prova,
+            'questoes': questoes,
             'candidato': candidato
         }
         return render(request, 'candidato/prova.html', context)

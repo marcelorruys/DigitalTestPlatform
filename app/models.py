@@ -42,6 +42,7 @@ class Questao(models.Model):
 class Prova(models.Model):
     titulo = models.TextField()
     curso = models.TextField()
+    quantidade_questoes = models.IntegerField(null=True)
     questoes = models.ManyToManyField(Questao)
     status = models.BooleanField(default=False)
 
