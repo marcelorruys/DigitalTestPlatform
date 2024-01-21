@@ -4,7 +4,11 @@ from django.shortcuts import render, redirect
 
 from .models import Questao, Prova, Candidato, Resposta
 
-from random import choice, shuffle
+from random import shuffle
+
+# Pegando GSPREAD CLIENTE pelo arquivo Settings
+from sistema import settings
+import gspread
 
 
 @login_required
@@ -171,6 +175,23 @@ def candidato_prova(request, id):
             respostas_lista.append(nome_questao+ ',' + peso_questao + ',' + resposta_candidato + ',' + correta_questao)
         respostas = ','.join(respostas_lista)    
         Resposta.objects.create(candidato=candidato, prova=prova, respostas=respostas)
+
+
+        nome_planilha = "Avaliações BOSCH UVA"
+        possivel_nome_folha = prova.titulo +"-"+ prova.id
+
+        # Abra a planilha pelo nome
+        planilha = settings.GSPREAD_CLIENT.open(nome_planilha)
+
+        # Verifique se a folha já existe
+        try:
+            folha = planilha.worksheet(possivel_nome_folha)
+
+        except gspread.exceptions.WorksheetNotFound:
+            folha = planilha.add_worksheet(title=prova.titulo +"-"+ prova.id)
+
+
+
         return render(request, 'candidato/enviado.html')
     else:
         context = {
@@ -179,6 +200,8 @@ def candidato_prova(request, id):
         }
         return render(request, 'candidato/prova.html', context)
     
+
+"""Checar se está sendo usada"""
 def candidato_finalizada(request):
     return render(request, 'candidato/enviado.html')
     

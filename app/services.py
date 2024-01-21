@@ -7,7 +7,7 @@ def initialize_gspread() -> gspread.client.Client:
   """
   Initialize a gspread client with the given credentials.
   """
-  return gspread.service_account_from_dict(get_credentials())  # Note: we could move this to settings to do this once.
+  return gspread.service_account_from_dict(get_credentials())  
 
 def get_credentials() -> dict:
   """
@@ -27,10 +27,10 @@ def get_credentials() -> dict:
     "universe_domain": os.getenv("UNIVERSE_DOMAIN")
   }
 
-def get_all_rows(doc_name: str, sheet_name: str = None) -> List[dict]:
-  """
-  Fetches all rows from a given Google Sheet worksheet.
-  """
+"""def get_all_rows(doc_name: str, sheet_name: str = None) -> List[dict]:
+  
+  # Fetches all rows from a given Google Sheet worksheet.
+
   sh = settings.GSPREAD_CLIENT.open(doc_name)
   worksheet = sh.worksheet[sheet_name] if sheet_name else sh.get_worksheet(0)
-  return worksheet.get_all_records()
+  return worksheet.get_all_records()"""
