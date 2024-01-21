@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 from .models import Questao, Prova, Candidato, Resposta
 
-from random import choice
+from random import choice, shuffle
 
 
 @login_required
@@ -94,14 +94,12 @@ def criar_prova(request):
         titulo = request.POST.get('titulo')
         curso = request.POST.get('curso')
         qnt_questoes = int(request.POST.get('quantidade'))
-
-        questoes_total = Questao.objects.all()
-        questoes_sorteadas = list()
-        for i in range(qnt_questoes):
-            questoes_sorteadas.append(choice(questoes_total))
+        questoes_total = list(Questao.objects.all())
+        shuffle(questoes_total)
+        questoes_sorteadas = questoes_total[:qnt_questoes]
         prova = Prova.objects.create(titulo=titulo, curso=curso) 
         prova.questoes.set(questoes_sorteadas)
-        return redirect(index_prova) 
+        return redirect(index_prova)
     else:
         return render(request, 'prova/criar.html')
 
@@ -129,9 +127,7 @@ def editar_prova(request, id):
 @login_required
 def deletar_prova(request, id):
     prova = Prova.objects.get(id=id)
-    if request.method == 'POST':
-    
-        prova.delete()
+    prova.delete()
     return redirect(index_prova)
 
 
@@ -165,17 +161,21 @@ def candidato_prova(request, id):
     candidato = Candidato.objects.get(email=candidato_email)
     prova = Prova.objects.get(id=id) 
     if request.method == 'POST':
-        respostas = []
+        respostas_lista = []
         for questao in prova.questoes.all():
             nome_resposta = f'resposta_{questao.id}'
-            resposta_candidato = request.POST.get(nome_resposta)
-            respostas.append(Resposta(candidato=candidato, prova=prova, respostas=resposta_candidato))
-        Resposta.objects.bulk_create(respostas)
-        return render(request, 'candidato/enviado.html', {'candidato': candidato, 'prova': prova, 'respostas': respostas})
+            nome_questao = f'questao_{questao.id}'
+            peso_questao = f'peso={questao.peso}'
+            correta_questao = f'correta={questao.correta}'
+            resposta_candidato = request.POST.get(nome_resposta)            
+            respostas_lista.append(nome_questao+ ',' + peso_questao + ',' + resposta_candidato + ',' + correta_questao)
+        respostas = ','.join(respostas_lista)    
+        Resposta.objects.create(candidato=candidato, prova=prova, respostas=respostas)
+        return render(request, 'candidato/enviado.html')
     else:
         context = {
-            'prova' : prova,
-            'candidato' : candidato
+            'prova': prova,
+            'candidato': candidato
         }
         return render(request, 'candidato/prova.html', context)
     

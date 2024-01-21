@@ -44,7 +44,8 @@
         </div>
       </div>
 
-      <form action={% url "candidato_finalizada" %} id="form-prova">
+      <form method="POST" action={% url "candidato_prova" prova.id %} id="form-prova">
+        {% csrf_token %}
         {% for questao in prova.questoes.all %}
         <h3>Questão {{ forloop.counter }}</h2>
           <div>
