@@ -268,9 +268,6 @@ def candidato_prova(request, id):
         return render(request, 'candidato/prova.html', context)
 
 
-#def 
-
-
 """Checar se está sendo usada"""
 def candidato_finalizada(request):
     return render(request, 'candidato/enviado.html')

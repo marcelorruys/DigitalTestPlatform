@@ -414,19 +414,21 @@ header {
   flex-direction: column;
   margin-top: 80px;
   overflow-wrap: break-word;
-  text-align: center;
+  text-align: left;
 }
 
 #form-prova label{
   display: flex;
   max-width: 1080px;
   overflow-wrap: break-word;
+  text-align: left;
 }
 
 
 #form-prova h2{
   font-size: 24px;
   font-weight: 400;
+  text-align: left;
 }
 
 
@@ -489,7 +491,7 @@ header {
   font-size: 22px;
 }
 
-.botao-container{
+.botao-container-deletar{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
