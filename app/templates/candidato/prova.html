@@ -46,7 +46,7 @@
 
       <form method="POST" action={% url "candidato_prova" prova.id %} id="form-prova">
         {% csrf_token %}
-        {% for questao in prova.questoes.all %}
+        {% for questao in questoes %}
         <h3>Questão {{ forloop.counter }}</h2>
           <div>
             <h3>{{ questao.texto_questao }}</h3>
@@ -81,8 +81,8 @@
                 <h2>E</h2>
                 <label for="E_{{ questao.id }}">{{ questao.opcao_e }}</label>
             </div>
-            {% endfor %}
-        </div>
+          </div>
+        {% endfor %}
         <button type="submit" class="enviar-prova">Enviar</button>
       </form>
     </div>

@@ -46,11 +46,11 @@
   <section>
     <div class="card-estilizado">
       <img src={% static "img/Check.jpg" %} width="144px">
-      <h1 class="">Desaja deletar a Prova?</h1>
-      <div class="botao-container">
-        <button class="botao" type="button" style="background: #9E2896;"><a href={% url 'editar_prova' prova.id %}>Voltar</a></button>
-        <button class="botao" type="button" style="background: #9E2896;"><a href={% url 'deletar_prova' prova.id %}>Deletar</a></button>
-      </div>
+      <h1 class="">Deseja deletar a Questão?</h1>
+    <div class="botao-container">
+      <button class="botao" type="button" style="background: #9E2896;"><a href={% url 'editar_questao' questao.id %}>Voltar</a></button>
+      <button class="botao" type="button" style="background: #9E2896;"><a href={% url 'deletar_questao' questao.id %}>Deletar</a></button>
+    </div>
     </div>
 
   </section>

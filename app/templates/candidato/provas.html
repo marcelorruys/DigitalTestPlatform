@@ -42,8 +42,8 @@
           <h1 class="titulo-principal">Lista de provas</h1>
         </div>
       </div>
+      {% if provas %}
         {% for prova in provas %}
-        {% if prova.status %}
         <div id="div-questoes">
             <div class="questao">
                 <div>
@@ -60,6 +60,7 @@
                 </div>
             </div>                   
         </div>
+        {% endfor %}
         {% else %}
         <div class="questao">
             <div>
@@ -72,7 +73,6 @@
             </div>
         </div>         
         {% endif %}
-        {% endfor %}
     </section>
 </body>
 
