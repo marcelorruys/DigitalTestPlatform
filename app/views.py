@@ -41,7 +41,7 @@ def criar_questao(request):
         opcao_e = request.POST.get('opcao_e')
         correta = request.POST.get('correta')
         Questao.objects.create(titulo=titulo, peso=peso, dificuldade=dificuldade, materia=materia, texto_questao=texto_questao, opcao_a=opcao_a, opcao_b=opcao_b, opcao_c=opcao_c, opcao_d=opcao_d, opcao_e=opcao_e, correta=correta)
-        return redirect(index_questao)
+        return redirect(add_questao)
     else:
         return render(request, 'questao/criar.html')
     
@@ -77,6 +77,14 @@ def editar_questao_post(request, id):
     return redirect(index_questao)
 
 
+def confirmar_deletar_questao(request, id):
+    questao = Questao.objects.get(id=id)
+    context = {
+        'questao' : questao
+    }
+    return render(request, 'questao/deletar.html', context)
+
+
 @login_required
 def deletar_questao(request, id):
     questao = Questao.objects.get(id=id)
@@ -104,7 +112,7 @@ def criar_prova(request):
         questoes_sorteadas = questoes_total[:qnt_questoes]
         prova = Prova.objects.create(titulo=titulo, curso=curso, quantidade_questoes=qnt_questoes) 
         prova.questoes.set(questoes_sorteadas)
-        return redirect(index_prova)
+        return redirect(add_prova)
     else:
         return render(request, 'prova/criar.html')
 
@@ -130,6 +138,14 @@ def editar_prova(request, id):
 
 
 @login_required
+def confirmar_deletar_prova(request, id):
+    prova = Prova.objects.get(id=id)
+    context = {
+        'prova' : prova
+    }
+    return render(request, 'prova/deletar.html', context)
+
+@login_required
 def deletar_prova(request, id):
     prova = Prova.objects.get(id=id)
     prova.delete()
@@ -151,10 +167,13 @@ def capturar_informacoes(request):
         telefone = request.POST.get('telefone')
         if not Candidato.objects.filter(email=email).exists(): 
             Candidato.objects.create(nome=nome, email=email, telefone=telefone) 
-    
         provas = Prova.objects.all()
+        provas_s = list()
+        for prova in provas:
+            if prova.status:
+                provas_s.append(prova)
         context = {
-            'provas' : provas
+            'provas' : provas_s
         }
         response = render(request, 'candidato/provas.html', context)
         response.set_cookie('email', email)
@@ -193,20 +212,44 @@ def candidato_prova(request, id):
                 for questao in range(prova.quantidade_questoes*4):
                     info_candidato.append(respostas[questao])
 
-                folha.insert_row(info_candidato)
+                folha.append_row(info_candidato)
 
+                acertos = 0
+                erros = 0
+                pontuacao = 0
+                linha_atual = len(folha.get_all_values())
+                coluna_atual = (prova.quantidade_questoes*4)+5
+                for coluna in range(8, coluna_atual, 4):
+                    value_quest = folha.cell(row=linha_atual, col=coluna).value
+                    value_resp = folha.cell(row=linha_atual, col=coluna + 1).value
+                    peso = folha.cell(row=linha_atual, col=coluna-1).value
+
+                    # Comparar e contar acertos
+                    if value_quest == value_resp:
+                        acertos += 1
+                        pontuacao += 1 * int(peso)
+                    else:
+                        erros += 1
+
+                # Registrar a contagem de acertos na nova coluna
+                folha.update_cell(row=linha_atual, col=coluna_atual + 1, value=acertos)
+                folha.update_cell(row=linha_atual, col=coluna_atual + 2, value=erros)
+                folha.update_cell(row=linha_atual, col=coluna_atual + 3, value=pontuacao)
                 break
             except:
                 folha = planilha.add_worksheet(title=possivel_nome_folha, rows=100, cols=100)
 
                 cabecalho = ["Nome", "Email", "Telefone", "Título da Pova", "Curso"]
-                for id in prova.quantidade_questoes:
+                for id in range(prova.quantidade_questoes):
                     cabecalho.append("Questão " + str(id+1))
                     cabecalho.append("Peso")
                     cabecalho.append("Resposta do Candidato")
                     cabecalho.append("Resposta Correta")
-
-                folha.insert_row(cabecalho, index = 1)
+                
+                cabecalho.append("Acertos")
+                cabecalho.append("Erros")
+                cabecalho.append("Pontuação")
+                folha.insert_row(cabecalho, index=1)
                 
         return render(request, 'candidato/enviado.html')
     else:
@@ -217,7 +260,7 @@ def candidato_prova(request, id):
             'candidato': candidato
         }
         return render(request, 'candidato/prova.html', context)
-    
+
 
 """Checar se está sendo usada"""
 def candidato_finalizada(request):

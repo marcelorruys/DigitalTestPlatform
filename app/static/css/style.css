@@ -488,3 +488,8 @@ header {
   transition: all 0.4s;
   font-size: 22px;
 }
+
+.botao-container{
+  display: flex;
+  justify-content: space-between;
+}
