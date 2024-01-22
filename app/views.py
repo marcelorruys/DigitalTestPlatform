@@ -10,6 +10,7 @@ from random import shuffle
 from sistema import settings
 import gspread
 import pandas as pd
+import openpyxl
 
 
 @login_required
@@ -235,6 +236,11 @@ def candidato_prova(request, id):
                 folha.update_cell(row=linha_atual, col=coluna_atual + 1, value=acertos)
                 folha.update_cell(row=linha_atual, col=coluna_atual + 2, value=erros)
                 folha.update_cell(row=linha_atual, col=coluna_atual + 3, value=pontuacao)
+
+                df = pd.DataFrame(folha.get_all_values())
+                nome_arquivo = possivel_nome_folha + ".xlsx"
+                with pd.ExcelWriter("S:/PM/ter/ets/Inter_Setor/COMPARTILHADO/APRENDIZES/DIGITAL_SOLUTIONS_09/GABRIEL OLIVEIRA JORDAO/hackathon/"+nome_arquivo, engine="openpyxl") as writer:
+                    df.to_excel(writer, sheet_name=nome_arquivo, index=False, header=False, columns=None)
                 break
             except:
                 folha = planilha.add_worksheet(title=possivel_nome_folha, rows=100, cols=100)
@@ -260,6 +266,9 @@ def candidato_prova(request, id):
             'candidato': candidato
         }
         return render(request, 'candidato/prova.html', context)
+
+
+#def 
 
 
 """Checar se está sendo usada"""
