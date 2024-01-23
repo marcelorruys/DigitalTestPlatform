@@ -15,7 +15,7 @@ document.addEventListener('mouseleave', () => {
 } else if (saidas < 4) {
     alert("Sua prova foi bloqueada")
     document.getElementById("prova").innerHTML="Prova Bloqueada"
-    window.location.href = {% url "bloqueada_prova"%};
+    window.location.href = ""
 }
 });
 

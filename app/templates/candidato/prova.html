@@ -19,7 +19,7 @@
         <div>
           <img src={% static "img/Bosch_UVA.svg" %} alt="">
         </div>
-    </div>
+      </div>
 
     </div>
   </header>
@@ -81,5 +81,25 @@
       </form>
     </div>
   </section>
+  <script>
+    let saidas = 0;
+
+    document.addEventListener('mouseleave', () => {
+      saidas++;
+      console.log(saidas);
+
+      if (saidas < 2) {
+        alert("Você não pode tirar o cursor da tela da prova");
+      } else if (saidas < 3) {
+        alert("Último aviso, não retire o cursor da tela");
+      } else if (saidas < 4) {
+        alert("Sua prova foi bloqueada");
+        const urlBloqueio = "{% url 'candidato_bloqueado' %}";
+        window.location.href = urlBloqueio;
+        document.getElementById("prova").innerHTML = "Prova Bloqueada";
+      }
+    });
+  </script>
+  
 </body>
 </html>

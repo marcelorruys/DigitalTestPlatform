@@ -268,6 +268,10 @@ def candidato_prova(request, id):
         return render(request, 'candidato/prova.html', context)
 
 
+def candidato_bloqueado(request):
+    return render(request, 'candidato/bloqueado.html')
+
+
 """Checar se está sendo usada"""
 def candidato_finalizada(request):
     return render(request, 'candidato/enviado.html')
